@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Tracking</title>
+  <link rel="stylesheet" href="./css/shop.css" />
+  <script src="js/auth.js"></script>
+  <style>
+    .tracking-container {
+      max-width: 1000px;
+      margin-top: 2rem;
+    }
+    .tracking-header {
+      background: var(--primary);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+      margin-bottom: 2rem;
+    }
+    .tracking-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .order-id-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .order-info-block {
+      background: var(--secondary);
+      padding: 1rem;
+      border-radius: 0.75rem;
+    }
+    .order-info-label {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .order-info-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .orders-section {
+      background: var(--primary);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+    }
+    .orders-section h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+    }
+    .order-card {
+      background: var(--secondary);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent);
+    }
+    .order-card:last-child {
+      margin-bottom: 0;
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .order-number {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .order-status {
+      display: inline-flex;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .status-processing {
+      background: #dbeafe;
+      color: #0c4a6e;
+    }
+    .status-shipped {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .status-delivered {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .order-items {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: var(--primary);
+      border-radius: 0.75rem;
+    }
+    .order-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--secondary);
+      align-items: flex-start;
+    }
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    .order-item-image {
+      width: 80px;
+      height: 80px;
+      background: var(--secondary);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .order-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .order-item-details {
+      flex: 1;
+    }
+    .order-item-title {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .order-item-meta {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    .order-item-price {
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .order-timeline {
+      margin-top: 1.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -1.85rem;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: 0.35rem;
+    }
+    .timeline-dot.completed {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+    .timeline-dot.pending {
+      background: #d1d5db;
+      box-shadow: 0 0 0 3px var(--secondary);
+    }
+    .timeline-content {
+      flex: 1;
+    }
+    .timeline-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-date {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--secondary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+    }
+    .empty-orders {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--secondary);
+      border-radius: 1rem;
+      color: #4d5270;
+    }
+    .empty-orders p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    .empty-orders a {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.95rem 2rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .empty-orders a:hover {
+      opacity: 0.95;
+    }
+    @media (max-width: 680px) {
+      .tracking-header {
+        padding: 1.5rem;
+      }
+      .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .order-item {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .order-item-image {
+        width: 100%;
+        max-width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="https://blogger.googleusercontent.com/img/a/AVvXsEghdXVxxAlp1t_cKedjD8EZ9toGFYAPe_c40Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58L4bOj-uZUWTysmgi9WMf1FTdD_EmL2xeVFsJhSf3gr8c5tiGX8frQdZtUv1ny-LEui0HDr0RmCCmY0bUaA" alt="Logo" />
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Profile</span>
+      </a>
+      <a href="shop.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Shop</span>
+      </a>
+      <a href="tracking.html" class="nav-item active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"></path>
+          <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Tracking</span>
+      </a>
+    </nav>
+    <div id="logout" class="sidebar-footer">
+      <a class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar flex">
+      <div class="greeting">
+        <h1>Order Tracking</h1>
+        <p>Track your purchases and view order details</p>
+      </div>
+      <div class="user-info flex center">
+        <img class="avatar user-profile-pic" src="" alt="User Avatar">
+      </div>
+      <div class="cart-area flex center" id="cartToggle">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </header>
+
+    <section id="trackingContainer" class="tracking-container"></section>
+  </main>
+
+  <script>
+    let usersDatabase = JSON.parse(localStorage.getItem('AprilUsers')) || [];
+    let currentUserIndex = localStorage.getItem('currentUserIndex');
+    let currentUserObj = usersDatabase[currentUserIndex];
+    let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function checkAuth() {
+      if (!currentUserObj) {
+        window.location.href = 'login.html';
+      }
+    }
+    checkAuth();
+
+    function updateCartCount() {
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      document.getElementById('cartCount').textContent = count;
+    }
+
+    function generateOrderNumber() {
+      return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    }
+
+    function getRandomStatus() {
+      const statuses = ['pending', 'processing', 'shipped', 'delivered'];
+      return statuses[Math.floor(Math.random() * statuses.length)];
+    }
+
+    function getStatusColor(status) {
+      const colors = {
+        pending: 'status-pending',
+        processing: 'status-processing',
+        shipped: 'status-shipped',
+        delivered: 'status-delivered'
+      };
+      return colors[status] || 'status-pending';
+    }
+
+    function getTimelineSteps(status) {
+      const steps = [
+        { title: 'Order Confirmed', completed: true },
+        { title: 'Processing', completed: ['processing', 'shipped', 'delivered'].includes(status) },
+        { title: 'Shipped', completed: ['shipped', 'delivered'].includes(status) },
+        { title: 'Delivered', completed: status === 'delivered' }
+      ];
+      return steps;
+    }
+
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    function renderOrders() {
+      const container = document.getElementById('trackingContainer');
+
+      if (orderHistory.length === 0) {
+        container.innerHTML = `
+          <div class="tracking-header">
+            <h2>Your Orders</h2>
+            <p style="opacity: 0.7; margin-top: 0.5rem;">You haven't placed any orders yet.</p>
+          </div>
+          <div class="orders-section">
+            <div class="empty-orders">
+              <p>No orders found</p>
+              <a href="shop.html">Start Shopping</a>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      let ordersHTML = '';
+      orderHistory.forEach((order, index) => {
+        const timelineSteps = getTimelineSteps(order.status);
+        let itemsHTML = '';
+        let totalAmount = 0;
+
+        order.items.forEach(item => {
+          const itemTotal = (item.price * item.quantity).toFixed(2);
+          totalAmount += parseFloat(itemTotal);
+          itemsHTML += `
+            <div class="order-item">
+              <div class="order-item-image">
+                <img src="${item.thumbnail}" alt="${item.title}" />
+              </div>
+              <div class="order-item-details">
+                <div class="order-item-title">${item.title}</div>
+                <div class="order-item-meta">
+                  <span>Qty: ${item.quantity}</span> • <span>$${item.price} each</span>
+                </div>
+              </div>
+              <div class="order-item-price">$${itemTotal}</div>
+            </div>
+          `;
+        });
+
+        let timelineHTML = '';
+        timelineSteps.forEach((step, stepIndex) => {
+          timelineHTML += `
+            <div class="timeline-item">
+              <div class="timeline-dot ${step.completed ? 'completed' : 'pending'}"></div>
+              <div class="timeline-content">
+                <div class="timeline-title">${step.title}</div>
+                <div class="timeline-date">${step.completed ? formatDate(order.date) : 'Pending'}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        ordersHTML += `
+          <div class="order-card">
+            <div class="order-header">
+              <span class="order-number">${order.orderNumber}</span>
+              <span class="order-status ${getStatusColor(order.status)}">${order.status}</span>
+            </div>
+            <div class="order-info-block" style="background: var(--primary); margin-bottom: 1rem;">
+              <div class="order-info-label">Order Date</div>
+              <div class="order-info-value">${formatDate(order.date)}</div>
+            </div>
+            <div class="order-items">
+              ${itemsHTML}
+              <div class="order-total">
+                <span>Total Amount:</span>
+                <span>$${totalAmount.toFixed(2)}</span>
+              </div>
+            </div>
+            <div class="order-timeline">
+              ${timelineHTML}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="tracking-header">
+          <h2>Your Orders</h2>
+          <p style="opacity: 0.7; margin-top: 0.5rem;">Total Orders: ${orderHistory.length}</p>
+        </div>
+        <div class="orders-section">
+          ${ordersHTML}
+        </div>
+      `;
+    }
+
+    function saveOrder(items, total) {
+      const order = {
+        orderNumber: generateOrderNumber(),
+        date: new Date().toISOString(),
+        status: getRandomStatus(),
+        items: items,
+        total: total,
+        userId: currentUserIndex
+      };
+      orderHistory.push(order);
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+      return order;
+    }
+
+    // Listen for payment completion
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'lastOrderPlaced') {
+        const orderData = JSON.parse(e.newValue);
+        if (orderData && orderData.userId === currentUserIndex) {
+          saveOrder(orderData.items, orderData.total);
+          renderOrders();
+        }
+      }
+    });
+
+    // document.getElementById('logout').addEventListener('click', function () {
+    //   let canLogout = confirm('Are you sure you want to logout?');
+    //   if (canLogout) {
+    //     localStorage.removeItem('currentUserIndex');
+    //     window.location.href = 'login.html';
+    //   }
+    // });
+
+    document.getElementById('cartToggle').addEventListener('click', () => {
+      window.location.href = 'cart.html';
+    });
+
+    renderOrders();
+    updateCartCount();
+  </script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

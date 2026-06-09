@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Detail</title>
+  <link rel="stylesheet" href="./css/shop.css" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="js/auth.js"></script>
+  <style>
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      max-width: 1180px;
+      margin-top: 2rem;
+    }
+    .product-detail-card {
+      background: var(--primary);
+      border-radius: 1.25rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+    .product-detail-image {
+      background: var(--secondary);
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .product-detail-image img {
+      width: 100%;
+      max-width: 520px;
+      object-fit: contain;
+      border-radius: 1rem;
+    }
+    .product-detail-info {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .product-detail-info h1 {
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+    .product-detail-info .product-category {
+      display: inline-flex;
+      padding: 0.5rem 0.85rem;
+      border-radius: 999px;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: fit-content;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .detail-block {
+      background: var(--secondary);
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      flex: 1;
+      min-width: 140px;
+    }
+    .detail-block span {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .detail-block p {
+      opacity: 0.75;
+      font-size: 0.9rem;
+    }
+    .price-block {
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .product-price-large {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .product-oldprice {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+    .product-description {
+      color: #4f4f59;
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--secondary);
+      width: fit-content;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+    }
+    .quantity-selector button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .quantity-selector input {
+      width: 50px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+    }
+    .product-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .product-actions a,
+    .product-actions button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.95rem 1.5rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--text);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+    }
+    .product-actions button:hover,
+    .product-actions a:hover {
+      opacity: 0.95;
+    }
+    .no-product-message {
+      grid-column: 1 / -1;
+      padding: 3rem 2rem;
+      background: var(--primary);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      text-align: center;
+      color: #4d5270;
+    }
+    .no-product-message p {
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 980px) {
+      .product-detail {
+        grid-template-columns: 1fr;
+      }
+      .product-detail-image {
+        min-height: 320px;
+        padding: 1.5rem;
+      }
+    }
+    @media (max-width: 680px) {
+      .product-detail-info {
+        padding: 1.5rem;
+      }
+      .detail-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .detail-block {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <!-- <img src="https://blogger.googleusercontent.com/img/a/AVvXsEghdXVxxAlp1t_cKedjD8EZ9toGFYAPe_c40Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58L4bOj-uZUWTysmgi9WMf1FTdD_EmL2xeVFsJhSf3gr8c5tiGX8frQdZtUv1ny-LEui0HDr0RmCCmY0bUaA" alt="Logo" /> -->
+      <img id="profilepic" class="avatar user-profile-pic" src="https://via.placeholder.com/60?text=Profile" alt="User Avatar">
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Profile</span>
+      </a>
+      <a href="shop.html" class="nav-item active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Shop</span>
+      </a>
+      <a href="#0" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div id="logout" class="sidebar-footer">
+      <a class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar flex">
+      <div class="greeting">
+        <h1>Product detail</h1>
+        <p>Only the selected item is shown here with the same shop-style layout.</p>
+      </div>
+      <div class="cart-area flex center" id="cartToggle">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </header>
+
+    <section id="productContainer" class="product-detail"></section>
+  </main>
+
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header flex">
+      <h2>Your Cart</h2>
+      <button class="cart-close" id="cartClose">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Your cart is empty</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total flex">
+        <span>Total</span>
+        <span id="cartTotal">$0.00</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+    </div>
+  </div>
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <script src="js/cart.js"></script>
+  <script>
+    let usersDatabase = JSON.parse(localStorage.getItem('AprilUsers')) || [];
+    let currentUserIndex = localStorage.getItem('currentUserIndex');
+    let currentUserObj = usersDatabase[currentUserIndex];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let currentProduct = null;
+
+    function addToCart() {
+      if (!currentProduct) return;
+
+      const quantity = parseInt(document.getElementById('quantity').value) || 1;
+      const discount = ((currentProduct.discountPercentage / 100) * currentProduct.price).toFixed(2);
+      const actualPrice = (currentProduct.price - discount).toFixed(2);
+
+      const existingItem = cart.find(item => item.id === currentProduct.id);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({
+          id: currentProduct.id,
+          title: currentProduct.title,
+          price: parseFloat(actualPrice),
+          quantity: quantity,
+          thumbnail: currentProduct.thumbnail
+        });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+      alert(`Added ${quantity} item(s) to cart!`);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function renderProduct(product) {
+      currentProduct = product;
+      const discount = ((product.discountPercentage / 100) * product.price).toFixed(2);
+      const actualPrice = (product.price - discount).toFixed(2);
+      const productHTML = `
+        <div class="product-detail-card">
+          <div class="product-detail-image">
+            <img src="${product.thumbnail}" alt="${product.title}" />
+          </div>
+        </div>
+        <div class="product-detail-card product-detail-info">
+          <span class="product-category">${product.category}</span>
+          <h1>${product.title}</h1>
+          <div class="detail-row">
+            <div class="detail-block">
+              <span>Brand</span>
+              <p>${product.brand}</p>
+            </div>
+            <div class="detail-block">
+              <span>Stock</span>
+              <p>${product.stock} available</p>
+            </div>
+            <div class="detail-block">
+              <span>Rating</span>
+              <p>${product.rating} / 5</p>
+            </div>
+          </div>
+          <div class="price-block">
+            <div>
+              <div class="product-price-large">$${actualPrice}</div>
+              <div class="product-oldprice"><s>$${product.price}</s> • ${product.discountPercentage}% off</div>
+            </div>
+          </div>
+          <p class="product-description">${product.description}</p>
+          <div class="quantity-selector">
+            <button onclick="decreaseQuantity()">−</button>
+            <input type="number" id="quantity" value="1" min="1" max="${product.stock}">
+            <button onclick="increaseQuantity(${product.stock})">+</button>
+          </div>
+          <div class="product-actions">
+            <button class="btn-primary" onclick="addToCart()">Add to Cart</button>
+            <a class="btn-secondary" href="shop.html">Browse more items</a>
+          </div>
+        </div>
+      `;
+      document.getElementById('productContainer').innerHTML = productHTML;
+    }
+
+    function decreaseQuantity() {
+      const input = document.getElementById('quantity');
+      if (input.value > 1) input.value = parseInt(input.value) - 1;
+    }
+
+    function increaseQuantity(maxStock) {
+      const input = document.getElementById('quantity');
+      if (input.value < maxStock) input.value = parseInt(input.value) + 1;
+    }
+
+    function showError(message) {
+      document.getElementById('productContainer').innerHTML = `
+        <div class="no-product-message">
+          <p>${message}</p>
+          <a class="btn-primary" href="shop.html">Return to shop</a>
+        </div>
+      `;
+    }
+
+    const itemId = localStorage.getItem('currentItem');
+    if (!itemId) {
+      showError('No item selected yet.');
+    } else {
+      fetch(`https://dummyjson.com/products/${itemId}`)
+        .then((res) => {
+          if (!res.ok) throw new Error('Item not found');
+          return res.json();
+        })
+        .then((product) => {
+          renderProduct(product);
+        })
+        .catch(() => {
+          showError('Product could not be loaded. Please return to the shop.');
+        });
+    }
+
+    document.getElementById('cartToggle').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.add('active');
+      document.getElementById('cartOverlay').classList.add('active');
+    });
+
+    document.getElementById('cartClose').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.remove('active');
+      document.getElementById('cartOverlay').classList.remove('active');
+    });
+
+    document.getElementById('cartOverlay').addEventListener('click', () => {
+      document.getElementById('cartSidebar').classList.remove('active');
+      document.getElementById('cartOverlay').classList.remove('active');
+    });
+
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
+      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      payWithPaystack(totalAmount * 100, currentUserObj.email);
+    });
+
+    function payWithPaystack(amountInCents, userEmail) {
+      PaystackPop.setup({
+        key: 'pk_test_9a558288d1670a641dafa6f4e899ddb24f2fe749',
+        email: userEmail,
+        amount: amountInCents,
+        callback: (transaction) => {
+          console.log('Payment successful:', transaction);
+          alert('Payment successful! Thank you for your purchase.');
+          cart = [];
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartUI();
+          document.getElementById('cartSidebar').classList.remove('active');
+          document.getElementById('cartOverlay').classList.remove('active');
+        },
+        onClose: () => {
+          console.log('Payment window closed');
+        },
+        onError: (error) => {
+          console.log('Error: ', error.message);
+          alert('Payment failed: ' + error.message);
+        }
+      }).openIframe();
+    }
+
+    updateCartUI();
+  </script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

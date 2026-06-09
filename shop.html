@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <link rel="stylesheet" href="./css/shop.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img id="profilepic" class="avatar user-profile-pic" src="https://blogger.googleusercontent.com/img/a/AVvXsEghdXVxxAlp1t_cKedjD8EZ9toGFYAPe_c40Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58L4bOj-uZUWTysmgi9WMf1FTdD_EmL2xeVFsJhSf3gr8c5tiGX8frQdZtUv1ny-LEui0HDr0RmCCmY0bUaA" alt="User Avatar">
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Profile</span>
+      </a>
+      <a href="shop.html" class="nav-item active">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Shop</span>
+      </a>
+      <a href="#0" class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+    <div id="logout" class="sidebar-footer">
+      <a class="nav-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar flex">
+      <div class="greeting">
+        <h1>Shop</h1>
+        <p>Browse our collection of premium products.</p>
+      </div>
+      <a href="cart.html">
+        <div class="cart-area flex center" id="cartToggle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </a>
+    </header>
+
+    <section class="shop-controls flex">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
+      <div class="category-filters flex">
+        <button id="all" class="filter-btn active pd-btns" data-category="all">All</button>
+        <button id="beauty" class="filter-btn pd-btns" data-category="beauty">Beauty</button>
+        <button id="furniture" class="filter-btn pd-btns" data-category="furniture">Furniture</button>
+        <button id="accessories" class="filter-btn pd-btns" data-category="accessories">Accessories</button>
+      </div>
+    </section>
+
+    <section class="products-grid" id="productsGrid">
+
+
+    </section>
+
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header flex">
+        <h2>Your Cart</h2>
+        <button class="cart-close" id="cartClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p class="cart-empty">Your cart is empty</p>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total flex">
+          <span>Total</span>
+          <span id="cartTotal">$0.00</span>
+        </div>
+        <button class="checkout-btn">Checkout</button>
+      </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+  </main>
+
+</body>
+</html>
+
+<script src="js/profile.js"></script>
+<script src="js/cart.js"></script>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let usersDatabase = JSON.parse(localStorage.getItem('AprilUsers')) || [];
+let currentUserIndex = localStorage.getItem('currentUserIndex');
+let currentUserObj = usersDatabase[currentUserIndex];
+
+function addToCart(id) {
+  localStorage.setItem('currentItem', id);
+  window.location.href = 'product.html'
+}
+
+function updateProducts(data) {
+  productsGrid.innerHTML = '';
+  data.forEach((product , i ,arr) => {
+
+      let offPrice = (product.discountPercentage / 100) * product.price;
+      let actualPrice = (product.price - offPrice).toFixed(2);
+
+      productsGrid.innerHTML += `<div class="product-card">
+          <div class="product-image">
+            <img src="${product.thumbnail}" alt="${product.title}">
+            <span class="product-category">${product.category}</span>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">${product.title}</h3>
+            <div class="product-rating">
+              ${'<span class="star filled">&#9733;</span>'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '<span class="star half">&#9733;</span>' : ''}${'<span class="star">&#9733;</span>'.repeat(5 - Math.floor(product.rating) - (product.rating % 1 >= 0.5 ? 1 : 0))}
+              <span class="rating-num">${product.rating}</span>
+            </div>
+            <div class="product-bottom flex">
+              <div class="prices">
+                <span class="product-oldprice"><s>$${product.price}</s></span>
+                <span class="product-price">$${actualPrice}</span>
+              </div>
+              <button class="add-to-cart" onclick="addToCart(${product.id})">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                See More
+              </button>
+            </div>
+          </div>
+        </div>`
+
+      
+    });
+}
+
+let searchButtons = document.querySelectorAll('.pd-btns')
+let allButton = document.getElementById('all')
+
+searchButtons.forEach(btn => {
+
+  btn.addEventListener('click', function(e){
+    
+    let productCat = e.target.id;
+
+    fetchProducts(productCat, btn)
+
+  });
+})
+
+document.getElementById('searchInput').addEventListener('input', function(input){
+   fetch('https://dummyjson.com/products').then((res) =>  res.json()).then((data)=>{
+
+      let searchText = input.target.value;
+      let products = data.products
+      let filtered = products;
+
+      if(input.target.value.length !== 0){
+        filtered = filtered.filter(product => {
+          const term = searchText.toLowerCase();
+          return (
+            product.title.toLowerCase().includes(term) ||
+            product.description.toLowerCase().includes(term) ||
+            product.category.toLowerCase().includes(term)
+          )
+        }) 
+      }
+      
+      updateProducts(filtered)
+      
+   }).catch((error) => console.log(error) )
+})
+
+function fetchProducts(productCat, btn) {
+  fetch('https://dummyjson.com/products').then((res) =>  res.json()).then((data)=>{
+
+    let products = data.products
+
+    let filtered = products.filter(product => product.category === productCat);
+
+    if(filtered.length === 0) {
+      filtered = products
+      if(productCat !== 'all') alert('no product matched!');
+      searchButtons.forEach(button => button.classList.remove('active'))
+      allButton.classList.add('active')
+    }else{
+      // set active button
+      searchButtons.forEach(button => button.classList.remove('active'))
+      btn.classList.add('active');
+    }
+    updateProducts(filtered)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+fetchProducts('all', allButton);
+
+// method 1
+// fetch('https://dummyjson.com/products').then((res)=>  res.json()).then((data)=>  {
+// // console.log(data.products);
+
+// }).catch((error)=> {
+//  console.log(error);
+// })
+
+updateCartUI();
+// method 2
+
+// async function fetchProducts(params) {
+//  try {
+//    let res =  await fetch('https://dummyjson.com/products')
+//   let data =  await res.json()
+// console.log(data);
+//  } catch (error) {
+//   console.log(error);  
+//  }
+// }
+
+// fetchProducts()
+
+
+
+</script>
