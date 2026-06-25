@@ -4,17 +4,23 @@ function getUser(){
     return usersDatabase[currentUserIndex];
 }
 
-
 function checkAuth() {
     const currentUserObj = getUser();
-    if (!currentUserObj) {
+    if (!currentUserObj)  window.location.href = 'login.html';
+    if(!currentUserObj || !currentUserObj){
+        alert('cannot validate user session');
+        localStorage.removeItem('currentUserIndex');
         window.location.href = 'login.html';
     }
+    return currentUserObj;
 }
-checkAuth();
+
+let user = checkAuth(); // set user default value... should be updated when necessary
 
 window.onload = function(){
-    document.getElementById('logout').addEventListener('click', function () {
+    let logoutBtn = document.getElementById('logout');
+    
+    logoutBtn?.addEventListener('click', function () {
         let canLogout = confirm('are you sure?');
         if (canLogout) {
         localStorage.removeItem('currentUserIndex');

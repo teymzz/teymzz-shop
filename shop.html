@@ -5,7 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
     <link rel="stylesheet" href="./css/shop.css">
+    <link rel="stylesheet" href="./css/global.css">
     <script src="js/auth.js"></script>
+    <style>
+      .add-to-cart{
+        --base-color : #6944c5;
+        anchor-name: --add-to-cart; 
+        svg {
+          + .add-item:not(.active) {
+            display: none;
+          }
+          + .add-item.active {
+            gap: 1em;
+            display: inline-flex;
+            flex-direction: column;
+            position: absolute;
+            position-anchor: --add-to-cart;
+            margin-bottom: 1em;
+            right: anchor(right);
+            bottom: anchor(top);
+            width: 200px;
+            padding: 10px;
+            border-radius: 10px;
+            background: var(--base-color);
+            box-shadow: 0 0 2px 0 #cfcfcf;
+            text-align: left;
+            .title {
+              color: white;
+            }
+            .input-area{
+              display: flex;
+              /* background-color: white; */
+              background-color: #1e0f4f;
+              border-radius: 100vh;
+              align-items: center;
+              padding: 8px;
+
+              .inc, .dec {
+                padding: 1px;
+                display: inline-flex;
+                width: 25px;
+                height: 20px;
+                font-size: .75rem;
+                place-items: center;
+                justify-content: center;
+                border-radius: 100vh;
+                background: #e7e7e7;
+                color: #3d3d63;
+              }
+              input {
+                text-align: center;
+                border: none;
+                width: 100%;
+              }
+            }
+          }
+            
+          + .add-item::before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            right: 10px;
+            top: 100%;
+            border: solid 6px transparent;
+            border-bottom-color: var(--base-color);
+            transform: rotate(180deg);
+          }
+        } 
+
+      }
+      
+      /* [sp-icon] {
+        width: 2em;
+        height: 2em;
+        position: relative;
+        padding: 5px;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+*/
+
+      [sp-icon]:not(:has(svg))::before {
+        content: '';
+        display: inline-block;
+        background: currentColor;
+        position: absolute;
+        inset: 5%;
+        font-size: inherit;
+        color: currentcolor;
+        --webkit-mask: var(--sp-icon) center / cover no-repeat;
+        mask: var(--sp-icon) center / cover no-repeat;
+      }
+
+      [sp-icon="plus"]:not(:has(svg))::before{
+        --sp-icon: url('plus-lg.svg');
+      } 
+
+      [sp-icon] {
+        width: 2em;
+        height: 2em;
+        display: inline-block;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+
+      [sp-icon] svg {
+        width: 100%;
+        height: 100%;
+        fill: currentColor; /* inherits color from parent */
+      }
+    </style>
 </head>
 <body>
   <aside class="sidebar">
@@ -37,7 +146,7 @@
         </svg>
         <span>Shop</span>
       </a>
-      <a href="#0" class="nav-item">
+      <a href="settings.html" class="nav-item">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -91,10 +200,7 @@
       </div>
     </section>
 
-    <section class="products-grid" id="productsGrid">
-
-
-    </section>
+    <section class="products-grid" id="productsGrid"></section>
 
     <div class="cart-sidebar" id="cartSidebar">
       <div class="cart-header flex">
@@ -125,13 +231,136 @@
 
 <script src="js/profile.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/theme.js"></script>
 
 <script>
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let usersDatabase = JSON.parse(localStorage.getItem('AprilUsers')) || [];
-let currentUserIndex = localStorage.getItem('currentUserIndex');
-let currentUserObj = usersDatabase[currentUserIndex];
+let cart = getCart(); let productsList;
+
+function updateCartCount() {
+  cart = getCart();
+  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  document.getElementById('cartCount').textContent = count;
+}
+
+function getCartInfo(productItem, productid){
+  let cart = getCart();
+  let productIndex = productsList.findIndex(product => Number(product.id) === Number(productid));
+  let cartItem = cart.find(item => Number(item.id) === productid);
+  let cartIndex = cart.findIndex(item => Number(item.id) === productid);
+  let quantities = 0; let stock = Number(productItem.stock);
+  
+  const discount = ((productItem.discountPercentage / 100) * productItem.price).toFixed(2);
+  const actualPrice = (productItem.price - discount).toFixed(2);
+  
+  if(!cartItem) {
+    // create a temporary cart object for product item
+    cartItem = {
+      id: productItem.id,
+      title: productItem.title,
+      price: parseFloat(actualPrice),
+      quantity: 0,
+      thumbnail: productItem.thumbnail
+    };
+  }
+  return cartItem;
+}
+
+function increaseQty(btn, productid) {
+  
+  if(productsList){
+    let user = getUser(); // user details
+    let entireCart = user.cart || []; // get current cart
+    let productItem = productsList.find(product => product.id == productid);
+    let cartIndex = entireCart.findIndex(item => Number(item.id) === productItem.id);
+
+    let quantities = 0; let stock = Number(productItem.stock);
+    const discount = ((productItem.discountPercentage / 100) * productItem.price).toFixed(2);
+    const actualPrice = (productItem.price - discount).toFixed(2);
+    let oldCartFormat;
+
+    if(cartIndex < 0) {
+      oldCartFormat = {
+        id: productItem.id,
+        title: productItem.title,
+        price: parseFloat(actualPrice),
+        quantity: 0,
+        thumbnail: productItem.thumbnail
+      }
+      entireCart.push(oldCartFormat);
+      cartIndex = entireCart.findIndex(item => item.id === productItem.id);
+    }
+    
+    let thisCart = entireCart[cartIndex];
+    let canIncrease = (thisCart.quantity < productItem.stock);
+
+    if(canIncrease){
+
+      thisCart.quantity += 1;
+      entireCart[cartIndex] = thisCart;
+
+      user.cart = entireCart;
+
+      saveUser(user);
+
+      btn.closest('.input-area').querySelector('.quantity').value = thisCart.quantity;
+      updateCartCount();
+      
+    }else{
+      alert('product out of stock!')
+    }
+  }
+
+}
+
+function decreaseQty(btn, productid) {
+  
+  if(productsList){
+    let user = getUser(); // user details
+    let entireCart = user.cart || []; // get current cart
+    let productItem = productsList.find(product => product.id == productid);
+    let cartIndex = entireCart.findIndex(item => Number(item.id) === productItem.id);
+
+    let stock = Number(productItem.stock);
+    const discount = ((productItem.discountPercentage / 100) * productItem.price).toFixed(2);
+    const actualPrice = (productItem.price - discount).toFixed(2);
+    let oldCartFormat;
+
+    if(cartIndex < 0) {
+      oldCartFormat = {
+        id: productItem.id,
+        title: productItem.title,
+        price: parseFloat(actualPrice),
+        quantity: 0,
+        thumbnail: productItem.thumbnail
+      }
+      entireCart.push(oldCartFormat);
+      cartIndex = entireCart.findIndex(item => item.id === productItem.id);
+    }
+    
+    let thisCart = entireCart[cartIndex];
+    let canDecrease = (thisCart.quantity > 0);
+
+    if(canDecrease){
+
+      thisCart.quantity -= 1;
+      entireCart[cartIndex] = thisCart;
+
+      if(thisCart.quantity === 0){
+        entireCart.splice(cartIndex, 1);
+      }
+
+      user.cart = entireCart;
+
+      saveUser(user);
+
+      btn.closest('.input-area').querySelector('.quantity').value = thisCart.quantity;
+      updateCartCount();
+      
+    }
+  }
+}
 
 function addToCart(id) {
   localStorage.setItem('currentItem', id);
@@ -140,40 +369,65 @@ function addToCart(id) {
 
 function updateProducts(data) {
   productsGrid.innerHTML = '';
+
+  let cart = getCart(); let cartInfo = null;
+
   data.forEach((product , i ,arr) => {
 
-      let offPrice = (product.discountPercentage / 100) * product.price;
-      let actualPrice = (product.price - offPrice).toFixed(2);
+    let offPrice = (product.discountPercentage / 100) * product.price;
+    let actualPrice = (product.price - offPrice).toFixed(2);
+    
+    // console.log(cart);
+    let cartInfo = cart.find(value => value.id === product.id);
 
-      productsGrid.innerHTML += `<div class="product-card">
-          <div class="product-image">
-            <img src="${product.thumbnail}" alt="${product.title}">
-            <span class="product-category">${product.category}</span>
+    cartInfo = !cartInfo? 0 : cartInfo.quantity;
+    let quantity = cartInfo;
+//  onmouseleave="hideInput(this)"
+    productsGrid.innerHTML += `<div class="product-card">
+      <div class="product-image">
+        <img src="${product.thumbnail}" alt="${product.title}">
+        <span class="product-category">${product.category}</span>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">${product.title}</h3>
+        <div class="product-rating">
+          ${'<span class="star filled">&#9733;</span>'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '<span class="star half">&#9733;</span>' : ''}${'<span class="star">&#9733;</span>'.repeat(5 - Math.floor(product.rating) - (product.rating % 1 >= 0.5 ? 1 : 0))}
+          <span class="rating-num">${product.rating}</span>
+        </div>
+        <div class="product-bottom flex">
+          <div class="prices">
+            <span class="product-oldprice"><s>$${product.price}</s></span>
+            <span class="product-price">$${actualPrice}</span>
           </div>
-          <div class="product-info">
-            <h3 class="product-name">${product.title}</h3>
-            <div class="product-rating">
-              ${'<span class="star filled">&#9733;</span>'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '<span class="star half">&#9733;</span>' : ''}${'<span class="star">&#9733;</span>'.repeat(5 - Math.floor(product.rating) - (product.rating % 1 >= 0.5 ? 1 : 0))}
-              <span class="rating-num">${product.rating}</span>
-            </div>
-            <div class="product-bottom flex">
-              <div class="prices">
-                <span class="product-oldprice"><s>$${product.price}</s></span>
-                <span class="product-price">$${actualPrice}</span>
+          <button class="add-to-cart">
+            <svg class="" onmouseenter="showInput(this)"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <div class="add-item active" onmouseleave="hideInput(this)">
+              <div class="title">Add to cart</div> 
+              <div class="input-area">
+                <span class="dec" onclick="decreaseQty(this, ${product.id})">
+                  <span sp-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#999999"><path d="M200-440v-80h560v80H200Z"/></svg>
+                  </span>
+                </span>  
+                <input type="number" readonly class="quantity" value="${quantity}" min="1" max="${product.stock}">
+                <span class="inc" onclick="increaseQty(this, ${product.id})">
+                  <span sp-icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                  </span>
+                </span>  
               </div>
-              <button class="add-to-cart" onclick="addToCart(${product.id})">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                See More
-              </button>
             </div>
-          </div>
-        </div>`
+            <span class="see-more" onclick="addToCart(${product.id})">See More </span>
+          </button>
+        </div>
+      </div>
+    </div>` 
+  });
 
-      
-    });
+
 }
 
 let searchButtons = document.querySelectorAll('.pd-btns')
@@ -191,6 +445,9 @@ searchButtons.forEach(btn => {
 })
 
 document.getElementById('searchInput').addEventListener('input', function(input){
+   
+   if(!navigator.onLine) return showLoading();
+
    fetch('https://dummyjson.com/products').then((res) =>  res.json()).then((data)=>{
 
       let searchText = input.target.value;
@@ -213,12 +470,32 @@ document.getElementById('searchInput').addEventListener('input', function(input)
    }).catch((error) => console.log(error) )
 })
 
+function showLoading() {
+
+  if(!navigator.onLine){
+    productsGrid.innerHTML = `
+      <div class="loading-pane offline">
+       <span class="status offline"></span> Oops! You seem to be offline.
+      </div>
+    `;
+  }else{
+    productsGrid.innerHTML = `
+      <div class="loading-pane">
+        Loading products ... please wait
+      </div>
+    `;
+  }
+}
+
 function fetchProducts(productCat, btn) {
+  showLoading();
+  if(!navigator.onLine) return;
   fetch('https://dummyjson.com/products').then((res) =>  res.json()).then((data)=>{
 
     let products = data.products
 
     let filtered = products.filter(product => product.category === productCat);
+
 
     if(filtered.length === 0) {
       filtered = products
@@ -230,14 +507,33 @@ function fetchProducts(productCat, btn) {
       searchButtons.forEach(button => button.classList.remove('active'))
       btn.classList.add('active');
     }
+    productsList = filtered;
     updateProducts(filtered)
   }).catch((error) => {
-    console.log(error)
+    if(!navigator.onLine){
+      alert('all products cannot be retrieved due to network issues');
+    }else{
+      console.log(error)
+    }
   })
 }
 
 fetchProducts('all', allButton);
 
+window.addEventListener('online', function() {
+  fetchProducts('all', allButton);
+})
+
+
+function showInput(svg){
+  svg.nextElementSibling.classList.add('active')
+}
+
+function hideInput(tooltip){
+  return;
+  let productCard = tooltip.closest('.product-card');
+  productCard.querySelector('.add-item').classList.remove('active')
+}
 // method 1
 // fetch('https://dummyjson.com/products').then((res)=>  res.json()).then((data)=>  {
 // // console.log(data.products);

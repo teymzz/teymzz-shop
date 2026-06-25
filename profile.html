@@ -6,7 +6,236 @@
     <title>User Profile</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/global.css">
     <script src="js/auth.js"></script>
+    <script src="js/activity-tracker.js"></script>
+    <style>
+        .spinner {
+            /* Size and shape */
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            
+            /* The track (light gray) and the moving indicator (blue) */
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #6944c5;
+            
+            /* The animation loop */
+            animation: spin 1s linear infinite;
+        }
+
+        .spinner, .uploaded {
+            display: none;
+        }
+
+        /* The rotation logic */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .upload-section {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            min-height: 85vh;
+            box-shadow: 0 0 5px 0px #e9e9e9;
+            .user-details-section {
+                h2 {
+                    margin-top: 20px;
+                    color: #6944c5;
+                }
+            }
+            .detail-item p {
+                color: #938a8a;
+                border-bottom: 1px solid #e1e3e9;
+            }
+        }
+        .modifier-section {
+            border-radius: 8px;
+            width: 100%;
+            min-height: 85vh;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            background-color: white;
+
+            .update-profile{
+                text-transform: uppercase;
+                font-size: 1.2rem;
+                color: #6944c5;
+            }
+
+            .input-area {
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                div:has(> input){
+                    padding: 4px;
+                    border: solid 1px #efefef;
+
+                    h4 {
+                        font-weight: normal;
+                        color:#6857ad;
+                    }
+                    input {
+                        border: none;
+                        outline: none;
+                        color: #919191;
+                        background-color: transparent;
+                    }
+                }
+                .password-area {
+                    h4{
+                        text-transform: uppercase;
+                        color: rgb(105, 105, 105);
+                        font-weight: normal;
+                        + div {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+            .save-update {
+                padding: 6px 12px;
+                margin-block: auto;
+                border-radius: 5px;
+                background-color: #6944c5;
+                cursor: pointer;
+                button {
+                    width: 100%;
+                    cursor: pointer;
+                    text-align: center;
+                    color: white;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                }
+            }
+            .save-update:hover {
+                background-color: #5637a3;
+                /* opacity: .7; */
+            }
+        }
+        .image-control{
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            .image-box {
+                display: flex;
+                justify-content: center;
+                background: #f5f5f5;
+                padding: 9px;
+                height: 140px;
+                width: 140px;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0 0 20px 0 #ffffec;
+                outline: solid 1px #f3f3f3;
+                outline-offset: 2px;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    background: #ebebeb;
+                }
+            }
+        }
+        .buttons {
+            .button-group {
+                width: 100%;
+
+                .file-label {
+                    width: 100%;
+                    padding: 8px 12px;
+                    display: flex; 
+                    align-items: center; 
+                    gap: .5em;
+                    font-size: .75rem;;
+                    font-weight: 600;
+                    color: #706a85;
+                    background-color: #f9f9f9;
+                    background-image: linear-gradient(206deg, #e3e3e3, transparent);
+                    box-shadow: 0 0 2px 0 #cdcdcd;
+                    border-radius: 100vh;
+                    label {
+                        /* outline: solid #6944c5; */
+                        background: white;
+                        color: #6944c5;
+                        background: #6857ad;
+                        color: white;
+                    }
+                    .remove {
+                        background: #c12020;
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .theme-dark {
+            .upload-section {
+                background: #07051c;
+                box-shadow: 0 0 23px 0px #000000;
+                background-image: linear-gradient(45deg, #0f072b, transparent);
+                outline: solid 1px #19193b;
+                .detail-item p {
+                    color: #b7b0b0;
+                    border-bottom: 1px solid #22283b;
+                }
+            }
+            .modifier-section {
+                background-color: #07051c;
+                box-shadow: 0 0 25px 0px black;
+                background-image: linear-gradient(45deg, #10072d, transparent);
+                outline: solid 1px #19193b;
+                
+                .save-update {
+                    background-color: #452d81;
+                }
+
+                .input-area {
+                    div:has(> input){
+                        border: solid 1px #3c365b;
+                        background: transparent;
+                    }
+
+                    .password-area {
+                        div:has(> input):not(:first-of-type) {
+                            border-top: none;
+                        }
+                    }
+                }
+                .update-profile{
+                    color: #a480ff;
+                }
+            }
+            .image-control {
+                .image-box {
+                    box-shadow: 0 0 20px 0 #000000;
+                    border: solid 5px #060112;
+                    background: #07051c;
+                    outline: solid 1px #181127;
+                }
+            }
+            .buttons {
+                & .button-group {
+                    .file-label {
+                        color: #ffffff;
+                        background-color: #6944c5;
+                        box-shadow: 0 0 2px 0 #0a0a0a;
+                        background-image: linear-gradient(179deg, black, #00000069), linear-gradient(358deg, #090620, #00000069);
+                    }
+                }
+            }
+            .user-details-section {
+                h2 {
+                    color: #c7c6c6;
+                    border-bottom: 2px solid #6944c5;
+                }
+            }
+        }
+    </style>
 </head>
 <body>
     <aside class="sidebar">
@@ -40,7 +269,7 @@
                 </svg>
                 <span>Shop</span>
             </a>
-            <a href="#0" class="nav-item">
+            <a href="settings.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -62,52 +291,143 @@
 
     <main class="main-content">
         <div class="container">
-            <h1>User Profile</h1>
 
             <div class="profile-content">
                 <!-- Image Upload Section -->
                 <div class="upload-section">
+
                     <div class="upload-form">
                         <div id="previewContainer" class="preview-container">
-                            <img id="previewImage" src="images/user1.png" alt="Profile Picture" class="preview-image">
+                            <div class="image-control">
+                                <div class="image-box">
+                                    <img id="previewImage" src="images/user1.png" alt="Profile Picture" class="preview-image">
+                                </div>
+                                <div class="buttons">
+                                    <input type="file" id="imageInput" accept="image/*"aria-label="Choose image file">
+                                    <div class="button-group">
+                                        <div class="file-label">
+                                            <label class="picker" for="imageInput">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                </svg>
+                                            </label>
+                                            <label class="upload" id="saveButton">
+                                                <div class="spinner"></div>
+                                                <svg class="uploaded" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                </svg>
+                                                <svg class="uploader" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                                </svg>
+                                            </label>
+                                            <div id="clearButton" class="remove">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                </svg>
+                                            </div>
+                                            PICTURE UPDATE
+                                        </div>
+                                        <!-- <button id="saveButton" class="btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                            </svg>
+                                            Update
+                                        </button> -->
+                                        <!-- <button id="clearButton" class="btn btn-secondary">Clear Picture</button> -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <input 
-                            type="file" 
-                            id="imageInput" 
-                            accept="image/*"
-                            aria-label="Choose image file"
-                        >
-                        <label for="imageInput" class="file-label">
-                            Choose Image
-                        </label>
-                        <div class="button-group">
-                            <button id="saveButton" class="btn btn-primary">Save Profile Picture</button>
-                            <button id="clearButton" class="btn btn-secondary">Clear Picture</button>
+                        <div class="user-details-section">
+                            <h2>Personal Information</h2>
+                            <div class="details-content">
+                                <div class="detail-item">
+                                    <label>Full Name</label>
+                                    <p id="userFullName">--</p>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Email Address</label>
+                                    <p id="userEmail">--</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <!-- <input type="file" id="imageInput" accept="image/*"aria-label="Choose image file">
+                            <label for="imageInput" class="file-label">
+                                Choose Image
+                            </label>
+                            <div class="button-group">
+                                <button id="saveButton" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                    </svg>
+                                    Save
+                                </button>
+                                <button id="clearButton" class="btn btn-secondary">Clear Picture</button>
+                            </div> -->
                         </div>
                     </div>
+
+                </div>
+
+                <div id="user-info" class="modifier-section">
+                    
+                    <div class="update-profile">Update profile</div>
+
+                    <div class="input-area">
+                        <div class="">
+                            <h4>Firstname</h4>
+                            <input id="ufname" type="text">
+                        </div>
+                        <div class="">
+                            <h4>Lastname</h4>
+                            <input id="ulname" type="text">
+                        </div>
+                        <div class="">
+                            <h4>Email</h4>
+                            <input id="uemail" type="Email">
+                        </div>
+                        <div class="">
+                            <h4>Location</h4>
+                            <input id="ulocation" type="text" placeholder="--NULL--">
+                        </div>
+
+                        <div id="updateUser" onclick="updateUser(this)" class="save-update">
+                            <button>
+                                SAVE CHANGES
+                            </button>
+                        </div>
+
+                        <div class="password-area">
+                            <h4 class="flex-v" style="gap:.2em">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lock" viewBox="0 0 16 16">
+                                    <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 5.996V14H3s-1 0-1-1 1-4 6-4c.564 0 1.077.038 1.544.107a4.524 4.524 0 0 0-.803.918A10.46 10.46 0 0 0 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h5ZM9 13a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2Zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1Z"/>
+                                </svg>
+                                Change Password
+                            </h4>
+                            <div class="">
+                                <input id="oldPass" type="Password" placeholder="old password">
+                            </div>
+                            <div class="">
+                                <input id="newPass" type="Password" placeholder="new password">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="updatePassword" onclick="updatePassword(this)" class="save-update">
+                        <button>
+                            UPDATE
+                        </button>
+                    </div>
+
                 </div>
 
                 <!-- User Details Section -->
-                <div class="user-details-section">
-                    <h2>Personal Information</h2>
-                    <div class="details-content">
-                        <div class="detail-item">
-                            <label>Full Name</label>
-                            <p id="userFullName">--</p>
-                        </div>
-                        <div class="detail-item">
-                            <label>Email Address</label>
-                            <p id="userEmail">--</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Info Section -->
-            <div class="info-section">
-                <p id="statusMessage" class="status-message"></p>
-                <p class="note">Note: The image path is saved to localStorage. This is a local storage demo - the image file itself is not uploaded to a server.</p>
-            </div>
         </div>
     </main>
 
@@ -115,5 +435,19 @@
         
     </script>
     <script src="js/profile.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+
+        let userdata = getUser(); 
+
+        let fullname = userdata.fullname.split(' ');
+
+        ufname.value = fullname[0];
+        ulname.value = fullname[1];
+        uemail.value = userdata.email;
+        if(userdata.location) ulocation.value = userdata.location;
+
+    </script>
 </body>
 </html>

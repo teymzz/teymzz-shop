@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/global.css">
+    <script src="js/auth.js"></script>
+    <script src="js/activity-tracker.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img id="profilepic" class="avatar" src="https://blogger.googleusercontent.com/img/a/AVvXsEghdXVxxAlp1t_cKedjD8EZ9toGFYAPe_c40Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58L4bOj-uZUWTysmgi9WMf1FTdD_EmL2xeVFsJhSf3gr8c5tiGX8frQdZtUv1ny-LEui0HDr0RmCCmY0bUaA" alt="Logo">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <div id="imagearea">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                    </svg>
+                </div>
+                <span>Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profile</span>
+            </a>
+            <a href="shop.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <span>Shop</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="settings-header">
+                <h1>Settings</h1>
+                <p class="subtitle">Manage your preferences and account settings</p>
+            </div>
+
+            <!-- Notifications Settings -->
+            <!-- <div class="settings-section">
+                <div class="settings-title">
+                    <h2>Notifications</h2>
+                    <p class="section-description">Control how you receive notifications</p>
+                </div>
+                
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="emailNotifications" class="setting-label">Email Notifications</label>
+                        <p class="setting-description">Receive email alerts for important updates</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="checkbox" id="emailNotifications" class="toggle-switch">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="smsNotifications" class="setting-label">SMS Notifications</label>
+                        <p class="setting-description">Receive SMS for urgent notifications</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="checkbox" id="smsNotifications" class="toggle-switch">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="orderUpdates" class="setting-label">Order Updates</label>
+                        <p class="setting-description">Get notified about order status changes</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="checkbox" id="orderUpdates" class="toggle-switch">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="promotionalEmails" class="setting-label">Promotional Emails</label>
+                        <p class="setting-description">Receive offers and promotional messages</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="checkbox" id="promotionalEmails" class="toggle-switch">
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Display Settings -->
+            <div class="settings-section">
+                <div class="settings-title">
+                    <h2>Display</h2>
+                    <p class="section-description">Customize your visual experience</p>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="themeSelect" class="setting-label">Theme</label>
+                        <p class="setting-description">Choose your preferred color scheme</p>
+                    </div>
+                    <div class="setting-control">
+                        <select id="themeSelect" class="select-input">
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                            <option value="auto">Auto (Browser)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="languageSelect" class="setting-label">Language</label>
+                        <p class="setting-description">Select your preferred language</p>
+                    </div>
+                    <div class="setting-control">
+                        <select id="languageSelect" class="select-input">
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                        </select>
+                    </div>
+                </div> -->
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="fontSize" class="setting-label">Font Size</label>
+                        <p class="setting-description">Adjust text size for better readability</p>
+                    </div>
+                    <div class="setting-control">
+                        <select id="fontSize" class="select-input">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Account Settings -->
+            <div class="settings-section">
+                <div class="settings-title">
+                    <h2>AutoSave</h2>
+                    <p class="section-description">Manage autosave features</p>
+                </div>
+
+                <!-- <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="currencySelect" class="setting-label">Currency</label>
+                        <p class="setting-description">Choose your preferred currency for transactions</p>
+                    </div>
+                    <div class="setting-control">
+                        <select id="currencySelect" class="select-input">
+                            <option value="usd">USD ($)</option>
+                            <option value="eur">EUR (€)</option>
+                            <option value="gbp">GBP (£)</option>
+                            <option value="jpy">JPY (¥)</option>
+                        </select>
+                    </div>
+                </div> -->
+
+                <div class="setting-item">
+                    <div class="setting-content">
+                        <label for="autoSave" class="setting-label">Auto-Save Preferences</label>
+                        <p class="setting-description">Automatically save your cart and preferences</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="checkbox" id="autoSave" class="toggle-switch">
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-actions">
+                <button id="saveButton" class="btn btn-primary">Save Settings</button>
+                <button id="resetButton" class="btn btn-secondary">Reset to Defaults</button>
+                <button id="logout" class="btn btn-danger">Logout</button>
+            </div>
+
+
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+    </main>
+
+    <script src="js/settings.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        function loadSettings() {
+            let settings = getCurrentSettings(); // Load settings from localStorage
+            if(!settings) return ;
+
+            // Display settings
+            document.getElementById('themeSelect').value = settings.display.theme;
+            document.getElementById('fontSize').value = settings.display.fontSize;
+            document.getElementById('autoSave').checked = settings.account.autoSave;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+
+            // Save button
+            const saveButton = document.getElementById('saveButton');
+            if (saveButton) {
+                saveButton.addEventListener('click', saveSettings);
+            }
+
+            // Reset button
+            const resetButton = document.getElementById('resetButton');
+            if (resetButton) {
+                resetButton.addEventListener('click', resetSettings);
+            }
+
+            // Logout button
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    const confirmed = confirm('Are you sure you want to logout?');
+                    if (confirmed) {
+                        localStorage.removeItem('currentUserIndex');
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+
+            // Update profile picture
+            const user = getUser();
+            if (user && user.profilePic) {
+                const profilePicElement = document.getElementById('profilepic');
+                if (profilePicElement) {
+                    profilePicElement.src = user.profilePic;
+                }
+            }
+
+            // Auto-save on any setting change
+            const inputs = document.querySelectorAll('input[type="checkbox"], select');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (document.getElementById('autoSave').checked) {
+                        saveSettings();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

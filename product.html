@@ -5,198 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Detail</title>
   <link rel="stylesheet" href="./css/shop.css" />
+  <link rel="stylesheet" href="./css/product.css" />
+  <link rel="stylesheet" href="./css/global.css" />
   <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="js/activity-tracker.js"></script>
   <script src="js/auth.js"></script>
-  <style>
-    .product-detail {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 2rem;
-      max-width: 1180px;
-      margin-top: 2rem;
-    }
-    .product-detail-card {
-      background: var(--primary);
-      border-radius: 1.25rem;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
-      overflow: hidden;
-    }
-    .product-detail-image {
-      background: var(--secondary);
-      min-height: 440px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .product-detail-image img {
-      width: 100%;
-      max-width: 520px;
-      object-fit: contain;
-      border-radius: 1rem;
-    }
-    .product-detail-info {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .product-detail-info h1 {
-      font-size: 2rem;
-      line-height: 1.1;
-    }
-    .product-detail-info .product-category {
-      display: inline-flex;
-      padding: 0.5rem 0.85rem;
-      border-radius: 999px;
-      background: var(--accent-bg);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      width: fit-content;
-    }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .detail-block {
-      background: var(--secondary);
-      padding: 1rem 1.25rem;
-      border-radius: 1rem;
-      flex: 1;
-      min-width: 140px;
-    }
-    .detail-block span {
-      display: block;
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-    }
-    .detail-block p {
-      opacity: 0.75;
-      font-size: 0.9rem;
-    }
-    .price-block {
-      display: flex;
-      gap: 1rem;
-      align-items: baseline;
-      flex-wrap: wrap;
-    }
-    .product-price-large {
-      font-size: 2.25rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .product-oldprice {
-      font-size: 1rem;
-      opacity: 0.7;
-    }
-    .product-description {
-      color: #4f4f59;
-      line-height: 1.8;
-      font-size: 0.98rem;
-    }
-    .quantity-selector {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--secondary);
-      width: fit-content;
-      padding: 0.5rem;
-      border-radius: 0.75rem;
-    }
-    .quantity-selector button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem 0.75rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
-    .quantity-selector input {
-      width: 50px;
-      text-align: center;
-      border: none;
-      background: transparent;
-      font-weight: 600;
-    }
-    .product-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-    }
-    .product-actions a,
-    .product-actions button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.95rem 1.5rem;
-      border-radius: 0.75rem;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      font-family: inherit;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    }
-    .btn-secondary {
-      background: var(--secondary);
-      color: var(--text);
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--primary);
-    }
-    .product-actions button:hover,
-    .product-actions a:hover {
-      opacity: 0.95;
-    }
-    .no-product-message {
-      grid-column: 1 / -1;
-      padding: 3rem 2rem;
-      background: var(--primary);
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-      text-align: center;
-      color: #4d5270;
-    }
-    .no-product-message p {
-      margin-bottom: 1rem;
-    }
-    @media (max-width: 980px) {
-      .product-detail {
-        grid-template-columns: 1fr;
-      }
-      .product-detail-image {
-        min-height: 320px;
-        padding: 1.5rem;
-      }
-    }
-    @media (max-width: 680px) {
-      .product-detail-info {
-        padding: 1.5rem;
-      }
-      .detail-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .detail-block {
-        min-width: auto;
-      }
-    }
-  </style>
 </head>
 <body>
   <aside class="sidebar">
     <div class="sidebar-header">
-      <!-- <img src="https://blogger.googleusercontent.com/img/a/AVvXsEghdXVxxAlp1t_cKedjD8EZ9toGFYAPe_c40Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58Sdogsj12fzOjV65u4rsHBVo7jnViKGu7pFKEncx3FcIh9GAJqz0IXOwuX1HW5hA_9uy58L4bOj-uZUWTysmgi9WMf1FTdD_EmL2xeVFsJhSf3gr8c5tiGX8frQdZtUv1ny-LEui0HDr0RmCCmY0bUaA" alt="Logo" /> -->
       <img id="profilepic" class="avatar user-profile-pic" src="https://via.placeholder.com/60?text=Profile" alt="User Avatar">
     </div>
     <nav class="sidebar-nav">
@@ -224,7 +41,7 @@
         </svg>
         <span>Shop</span>
       </a>
-      <a href="#0" class="nav-item">
+      <a href="settings.html" class="nav-item">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -250,14 +67,16 @@
         <h1>Product detail</h1>
         <p>Only the selected item is shown here with the same shop-style layout.</p>
       </div>
-      <div class="cart-area flex center" id="cartToggle">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-        </svg>
-        <span class="cart-count" id="cartCount">0</span>
-      </div>
+      <a href="cart.html">
+        <div class="cart-area flex center" id="cartToggle">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </a>
     </header>
 
     <section id="productContainer" class="product-detail"></section>
@@ -287,23 +106,23 @@
   <div class="cart-overlay" id="cartOverlay"></div>
   <script src="js/cart.js"></script>
   <script>
-    let usersDatabase = JSON.parse(localStorage.getItem('AprilUsers')) || [];
-    let currentUserIndex = localStorage.getItem('currentUserIndex');
-    let currentUserObj = usersDatabase[currentUserIndex];
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    let currentUserObj = getUser();
+    let cart = getCart(currentUserObj);
     let currentProduct = null;
+    let itemQuantity = cart.quantity || 0;
 
     function addToCart() {
       if (!currentProduct) return;
-
+      
+      const existingItem = cart.find(item => item.id === currentProduct.id);
       const quantity = parseInt(document.getElementById('quantity').value) || 1;
       const discount = ((currentProduct.discountPercentage / 100) * currentProduct.price).toFixed(2);
       const actualPrice = (currentProduct.price - discount).toFixed(2);
 
-      const existingItem = cart.find(item => item.id === currentProduct.id);
 
       if (existingItem) {
-        existingItem.quantity += quantity;
+        existingItem.quantity = quantity;
       } else {
         cart.push({
           id: currentProduct.id,
@@ -314,9 +133,15 @@
         });
       }
 
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartUI();
-      alert(`Added ${quantity} item(s) to cart!`);
+      user = getUser();
+      user.cart = cart
+
+      if(saveUser(user)){
+        // localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+        alert(`Added ${quantity} item(s) to cart!`);
+      }
+      
     }
 
     function removeFromCart(index) {
@@ -327,6 +152,8 @@
 
     function renderProduct(product) {
       currentProduct = product;
+      let cartItem = cart.find(item => Number(item.id) === Number(product.id))
+      let quantities = cartItem? cartItem.quantity : 0;
       const discount = ((product.discountPercentage / 100) * product.price).toFixed(2);
       const actualPrice = (product.price - discount).toFixed(2);
       const productHTML = `
@@ -359,14 +186,19 @@
             </div>
           </div>
           <p class="product-description">${product.description}</p>
-          <div class="quantity-selector">
-            <button onclick="decreaseQuantity()">−</button>
-            <input type="number" id="quantity" value="1" min="1" max="${product.stock}">
-            <button onclick="increaseQuantity(${product.stock})">+</button>
+
+          <div class="add-item-area">
+            <div class="quantity-selector">
+              <button onclick="decreaseQuantity()">−</button>
+              <input type="number" id="quantity" value="${quantities}" min="1" max="${product.stock}">
+              <button onclick="increaseQuantity(${product.stock})">+</button>
+            </div>
+            <div class="product-actions">
+              <button class="btn-primary add-to-cart" onclick="addToCart()">Add to Cart</button>
+            </div>
           </div>
           <div class="product-actions">
-            <button class="btn-primary" onclick="addToCart()">Add to Cart</button>
-            <a class="btn-secondary" href="shop.html">Browse more items</a>
+            <a class="btn-secondary browse-more" href="shop.html">Browse more items</a>
           </div>
         </div>
       `;
@@ -393,6 +225,7 @@
     }
 
     const itemId = localStorage.getItem('currentItem');
+
     if (!itemId) {
       showError('No item selected yet.');
     } else {
@@ -461,5 +294,7 @@
     updateCartUI();
   </script>
   <script src="js/profile.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/theme.js"></script>
 </body>
 </html>
