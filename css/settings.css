@@ -390,6 +390,81 @@
         background-image: linear-gradient(45deg, black, transparent);
     }
 }
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     
-} */
+    .sidebar {
+       background-color: #07051c;    
+       border-right: 1px solid #25293b;
+       a{
+            color: #c9cbd5;
+       }
+    }
+    .sidebar-header {
+        border-bottom: 1px solid #12162a;
+    }
+    .avatar{
+      outline: solid 3px rgb(46 37 69);
+    }
+    .nav-item:hover {
+        background: #0f0c2f;
+    }
+    .nav-item.active {
+      background: #2e1273;
+      color: var(--primary);
+      background-image: linear-gradient(186deg, black, #00000070);
+    }
+
+    /* setting.html */
+    .main-content {
+        background-color: #080621;
+    }
+    .settings-section {
+        background: #060418;
+    }
+    .subtitle{
+        color: #b7b7b7;
+    }
+    .settings-title h2 {
+        color: #8b8080;
+    }
+    .settings-title {
+        border-bottom: 2px solid #1a1830;
+    }
+    .section-description
+    {
+        color: #626672;
+    }
+    .setting-item:hover {
+        background-color: #0e0b2d;
+        margin: 0 0;
+    }
+    .setting-item {
+        border-bottom: 1px solid #32224b;
+    }
+    .select-input {
+        border: 2px solid #422554;
+        background-color: #0e0b2d;
+        color: #cfcbcb;
+    }
+    .setting-label{
+        display: block;
+        color: #8244c5;
+    }
+    .toggle-switch:not(:checked) {
+        background-color: #181441;
+    }
+    .btn-danger {
+        background-color: #cd0012;
+        color: #ff7c7c;
+    }
+    .btn-primary {
+        background-color: #6944c5;
+        color: #d3d3d3;
+    }
+    .status-message.success {
+        background-color: #120b3a;
+        color: #7249d7;
+        border: 1px solid #2c2041;
+        background-image: linear-gradient(45deg, black, transparent);
+    }
+}

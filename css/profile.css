@@ -495,6 +495,69 @@ input[type="file"] {
     }
 }
 
+@media (prefers-color-scheme: dark) {
+.upload-section {
+    background: #07051c;
+    box-shadow: 0 0 23px 0px #000000;
+    background-image: linear-gradient(45deg, #0f072b, transparent);
+    outline: solid 1px #19193b;
+    .detail-item p {
+        color: #b7b0b0;
+        border-bottom: 1px solid #22283b;
+    }
+}
+.modifier-section {
+    background-color: #07051c;
+    box-shadow: 0 0 25px 0px black;
+    background-image: linear-gradient(45deg, #10072d, transparent);
+    outline: solid 1px #19193b;
+    
+    .save-update {
+        background-color: #452d81;
+    }
+
+    .input-area {
+        div:has(> input){
+            border: solid 1px #3c365b;
+            background: transparent;
+        }
+
+        .password-area {
+            div:has(> input):not(:first-of-type) {
+                border-top: none;
+            }
+        }
+    }
+    .update-profile{
+        color: #a480ff;
+    }
+}
+.image-control {
+    .image-box {
+        box-shadow: 0 0 20px 0 #000000;
+        border: solid 5px #060112;
+        background: #07051c;
+        outline: solid 1px #181127;
+    }
+}
+.buttons {
+    & .button-group {
+        .file-label {
+            color: #ffffff;
+            background-color: #6944c5;
+            box-shadow: 0 0 2px 0 #0a0a0a;
+            background-image: linear-gradient(179deg, black, #00000069), linear-gradient(358deg, #090620, #00000069);
+        }
+    }
+}
+.user-details-section {
+    h2 {
+        color: #c7c6c6;
+        border-bottom: 2px solid #6944c5;
+    }
+}
+}
+
 
 /* Responsive Design */
 @media (max-width: 980px) {

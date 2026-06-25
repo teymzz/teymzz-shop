@@ -698,3 +698,138 @@ a {
     background-image: linear-gradient(45deg, #000000e6, transparent) !important;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+
+  
+  .sidebar {
+      background-color: #07051c;    
+      border-right: 1px solid #25293b;
+      a{
+          color: #c9cbd5;
+      }
+  }
+  .sidebar-header {
+      border-bottom: 1px solid #12162a;
+  }
+  .sidebar-footer{
+    border-top: 1px solid #1b1031;
+  }
+  .avatar{
+    outline: solid 3px rgb(46 37 69);
+  }
+  .nav-item:hover {
+      background: #0f0c2f;
+  }
+  .nav-item.active {
+    background: #2e1273;
+    color: var(--primary);
+    background-image: linear-gradient(186deg, black, #00000070);
+  }
+  .main-content {
+      background-color: #080621;
+  }
+  .greeting h1 {
+      color: #8282a9;
+  }
+
+  .greeting p {
+      color: #cfc9c9;
+  }
+  .cart-area {
+    background: #3b3553;
+    transition: all 0.2s ease;
+    color: white;
+  }
+  .cart-area svg {
+    color: #a5a8b9;
+  }
+
+  .search-box {        
+    outline: solid 2px #4c4757;
+    background: #080621;
+    color: white;
+  }
+  .search-box input {
+    color: #b3b7c7;
+  }
+  .search-box input::placeholder {
+    color: #b3b7c7;
+  }
+  .filter-btn {
+    background: #1b0c3f;
+    color: #8e91a3;
+  }
+  .product-card{
+    background: #050314;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    outline: solid 1px #12122b;
+    outline-offset: 2px;
+  }
+  .product-category{
+    background: #3d2a6d;
+    background-image: linear-gradient(45deg, #13102d9c, #080e5b6e), radial-gradient(circle at center, #77759ba1, #0000007d);
+  }
+  .product-image{
+    background: #050314;
+    box-shadow: 0 12px 7px 6px #13132b inset;
+  }
+  .product-name{
+    color: #575a87;
+  }
+  .rating-num {
+    color: white;
+  }
+  .add-to-cart {
+    background: #1f133f;
+    background-image: linear-gradient(45deg, #050615, transparent);
+    
+    & svg {
+        & + .add-item.active {
+            background: #441ba9;
+            box-shadow: 0 0 4px 0 #000000;
+            background-image: linear-gradient(105deg, #000000c9, #0000006b);
+            .title {
+                color: #9789e7;
+            }
+            & .input-area {
+              .inc, .dec {
+                background: #3c4367;
+                color: white;
+              }
+                input[type="number"]{
+                  background-color: transparent;
+                  color: #d3d1d1;
+                }
+            }
+        }
+        + .add-item::before{
+            border: solid 6px transparent;
+            border-bottom-color: #251353;;
+          }
+    }
+  }
+
+  .products-grid:has(.loading-pane) {    
+    background: #32264d;
+    padding: 10px;
+    border: solid 1px #3e405a;
+    .loading-pane {
+        color: #a7a0a0;
+      }
+  }
+
+  .cart-count{
+      background-color: #b52e41;
+  }
+  input[type="number"]{
+    background-color: transparent;
+    color: black;
+  }
+  .filter-btn.active {
+    background: #7049cf !important;
+    color: var(--primary) !important;
+    background-image: linear-gradient(45deg, #000000e6, transparent) !important;
+  }
+
+}

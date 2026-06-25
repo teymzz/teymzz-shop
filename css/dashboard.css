@@ -637,3 +637,107 @@ a {
     background-image: linear-gradient(45deg, #0c0d3d, transparent);
   }
 }
+
+@media (prefers-color-scheme: dark) {
+
+  
+  .sidebar {
+    background-color: #07051c;    
+    border-right: 1px solid #25293b;
+    a{
+        color: #c9cbd5;
+    }
+  }
+  .sidebar-header {
+    border-bottom: 1px solid #12162a;
+  }
+  .sidebar-footer{
+    border-top: 1px solid #1b1031;
+  }
+  .avatar{    
+    background: #39314b;
+    outline: solid 3px rgb(46 37 69);
+  }
+  .nav-item:hover {
+      background: #0f0c2f;
+  }
+  .nav-item.active {
+    background: #2e1273;
+    color: var(--primary);
+    background-image: linear-gradient(186deg, black, #00000070);
+  }
+  .main-content {
+      background-color: #080621;
+  }
+
+  .greeting h1 {
+      color: #8282a9;
+  }
+
+  .greeting p {
+      color: #cfc9c9;
+  }
+
+  .stat-card {
+    background: #111229;
+    color: white;
+    background-image: linear-gradient(45deg, #09040e, transparent);
+    box-shadow: 0 0 20px black;
+  }
+
+  .recent-activity {
+    background: #111229;
+    color: #82aad3;
+    background-image: linear-gradient(45deg, black, transparent);
+  }
+
+  .activity-text {
+    color: #9674eb;
+  }
+  .activity-item {
+    border-bottom: 1px solid #0f1118;
+  }
+  .activity-dot {
+    background: #0b0d16;
+    outline: solid 1px #150f2d;
+  }
+  .recent-transactions {
+    background: #0c0d1e;
+    color: beige;
+    background-image: linear-gradient(45deg, black, transparent);
+  }
+  .pending-purchases {
+    background: #0c0d1e;
+    color: beige;
+    background-image: linear-gradient(45deg, black, transparent);
+  }
+  .pending-summary {
+    background: #121831;
+    background-image: linear-gradient(45deg, #000000bf, transparent);
+  }
+  .pending-item {
+    /* background: #383d53; */
+    background: linear-gradient(45deg, black, #1719354d);
+        box-shadow: 0 0 3px 2px #000000 inset;
+    .pending-item-price {
+      color: #8762e5;
+    }
+  }
+  .view-all {
+    padding: 2px 10px;
+      border-radius: 16px;
+      white-space: nowrap;
+      outline: solid 3px #5f4997;
+      background: #5334a1 linear-gradient(45deg, #13162f, transparent);
+      color: white;
+  }
+  .btn-view-cart {
+    background: #3a169b;
+    background-image: linear-gradient(45deg, #000000d9, transparent);
+  }
+  .btn-shop {
+    background: #6020ff;
+    background-image: linear-gradient(45deg, #0c0d3d, transparent);
+  }
+
+}

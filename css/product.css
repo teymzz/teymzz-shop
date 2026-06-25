@@ -256,3 +256,67 @@
         background-image: linear-gradient(45deg, #000000, transparent);
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    
+    .product-detail-image {
+        background: #0d101c;
+        background: linear-gradient(45deg, #08060cc2, transparent);
+    }
+    .product-detail-info h1 {
+        color: #6944c5;
+    }
+    .product-detail-info .product-category {
+        background: #5c536f;
+        color: #d6caf5;
+    }
+    .detail-block {
+        background: #060418; 
+    }
+    .detail-row {
+        color: wheat;
+    }
+    .product-detail-card {
+        background: #07051c;
+    }
+    .quantity-selector {
+        background: #303447;
+        background-image: linear-gradient(45deg, #060821, #263467db);
+        outline: solid 1px #121b47;
+        outline-offset: 2px;
+        button {
+            color: #cfbcff;
+            background: radial-gradient(#0d0f31, transparent);
+            border-radius: 100vh;
+            box-shadow: 0 0 2px;
+        }
+        button:active {
+            opacity: .2;
+        }
+        input {
+            color: white;
+        }
+    }
+    .cart-count{
+        background-color: #b52e41;
+    }
+    .product-oldprice {
+        color: #fd5b5b;
+    }
+    .add-to-cart {
+        background: linear-gradient(45deg, black, transparent);
+        box-shadow: 0 0 2px #212545;
+        transition: all .5s ease-in-out;
+    }
+    .add-to-cart:hover{
+        background: linear-gradient(45deg, black, transparent);
+        box-shadow: 0 0 2px #212545;
+        transition: all .5s ease-in-out;
+        opacity: .5 !important;
+    }
+    .browse-more {
+        background: #150547;
+        color: white;
+        background-image: linear-gradient(45deg, #000000, transparent);
+    }
+}
